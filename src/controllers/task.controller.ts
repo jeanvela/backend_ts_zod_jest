@@ -6,9 +6,15 @@ interface MyError extends Error {
     status?: number
 }
 
+type User = {
+    _id: string,
+    email: string
+}
+
 export const allTasks =async (req: Request, res: Response) => {
+    const user: User = req.user
     try {
-        const allTask = await Task.find()
+        const allTask = await Task.find({userId: user._id})
         return res.status(200).json(allTask)
     } catch (error) {
         const myError = error as MyError
@@ -50,7 +56,7 @@ export const deleteTask = async (req: Request, res: Response) => {
     try {
         const taskDelete = await Task.findByIdAndDelete(id)
         if (!taskDelete) throw new Error('Task not found')
-        return res.sendStatus(201)
+        return res.status(200).send('deleted success')
     } catch (error) {
         const myError = error as MyError
         return res.status(myError.status || 404).json({message: myError.message})
@@ -61,7 +67,7 @@ export const updateTask = async (req: Request, res: Response) => {
     const { id } = req.params
     const { title, description, status } = req.body
     try {
-        await Task.findByIdAndUpdate({id, $set: {title,description, status}})
+        await Task.findByIdAndUpdate(id, {title, description, status})
         return res.status(200).send({message: 'update success'})
     } catch (error) {
         const myError = error as MyError
@@ -73,7 +79,7 @@ export const taskStatus = async (req: Request, res: Response) => {
     const { status } =req.body
     const { id } = req.params
     try {
-        await Task.findByIdAndUpdate({id, $set: {status}})
+        await Task.findByIdAndUpdate(id, {$set: {status}})
         return res.status(200).send({message: 'update success'})
     } catch (error) {
         const myError = error as MyError

@@ -25,7 +25,7 @@ export const allTasks =async (req: Request, res: Response) => {
 export const oneTaskById =async (req: Request, res: Response) => {
     const { id } = req.params
     try {
-        const task = await Task.findById(id)
+        const task = await Task.findById({_id: id})
         if (!task) throw new Error('Not found task')
         return res.status(200).json(task)
     } catch (error) {
@@ -79,7 +79,8 @@ export const taskStatus = async (req: Request, res: Response) => {
     const { status } =req.body
     const { id } = req.params
     try {
-        await Task.findByIdAndUpdate(id, {$set: {status}})
+        const task = await Task.findByIdAndUpdate(id, {$set: {status}})
+        if (!task) throw new Error('Not found task')
         return res.status(200).send({message: 'update success'})
     } catch (error) {
         const myError = error as MyError

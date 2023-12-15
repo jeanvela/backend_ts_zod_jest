@@ -5,7 +5,8 @@ import { jwtConfig } from '../config/jwtConfig'
 type TokenError = VerifyErrors | null
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
-    const { token } = req.cookies
+    const token = req.headers.authorization?.replace('Bearer ', '')
+    // console.log(token)
     try {
         if (!token) return res.status(401).json({message: 'No token, authorization denied'})
         const options: VerifyOptions = {
@@ -24,6 +25,6 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
         if (err instanceof JsonWebTokenError) {
             return res.status(401).json({message: err.message})
         }
-        next(err)
+        return res.status(500).json({message: 'Internal server error'})
     }
 }

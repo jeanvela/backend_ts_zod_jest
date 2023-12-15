@@ -16,11 +16,11 @@ export const signIn = async (req: Request, res: Response) => {
         const isMatch = await comparePassword(password, user.password)
         if (!isMatch) throw new Error('Invalid credentials')
         const token = createdToken({_id: user._id, email})
-        
-        return res.status(200).cookie('token', token).json({
+        return res.status(200).set('Authorization', `Bearer ${token}`).json({
             _id: user._id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            token
         })
     } catch (error) {
         const myError = error as MyError

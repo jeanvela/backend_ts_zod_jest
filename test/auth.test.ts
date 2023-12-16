@@ -1,10 +1,13 @@
 import request from 'supertest'
 import app from '../src/app'
-import { dbConnect } from '../src/db'
+import { dbTest } from './functions/dbTest'
 import { disconnect } from 'mongoose'
+import User from '../src/models/user'
+
+let db: any;
 
 beforeAll( async () => {
-    await dbConnect()
+    db = await dbTest()
 }) 
 
 afterAll(async () => {

@@ -1,8 +1,8 @@
 import mongoose, { disconnect } from "mongoose"
-import { dbConnect } from "../src/db"
+import { dbTest } from "./functions/dbTest"
 
 beforeAll( async () => {
-    await dbConnect()
+    await dbTest()
 }) 
 
 afterAll( async () => {

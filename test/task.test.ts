@@ -1,11 +1,11 @@
 import request from 'supertest'
 import app from '../src/app'
 import { generateValidateToken } from './functions/generateValidToken'
-import { dbConnect } from '../src/db'
+import { dbTest } from './functions/dbTest'
 import { disconnect } from 'mongoose'
 
 beforeAll( async () => {
-    await dbConnect()
+    await dbTest()
 }) 
 
 afterAll(async () => {

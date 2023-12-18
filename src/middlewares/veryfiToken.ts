@@ -6,13 +6,10 @@ type TokenError = VerifyErrors | null
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
     const token = req.headers.authorization?.replace('Bearer ', '')
-    // console.log(token)
     try {
         if (!token) return res.status(401).json({message: 'No token, authorization denied'})
         const options: VerifyOptions = {
             algorithms: ['HS256'],
-            // audience: jwtConfig.audience,
-            // issuer: jwtConfig.issuer,
             ignoreExpiration: false,
             complete: false,
         }

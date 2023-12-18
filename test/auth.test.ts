@@ -53,7 +53,6 @@ describe('POST /signin', () => {
         }
         const response = await request(app).post('/api/signin').send(user)
         expect(response.status).toBe(200)
-        // expect(response.body).toBe('text')
     })
     test('should respond with a 401 status code if there is incorrect information', async () => {
         const user = {

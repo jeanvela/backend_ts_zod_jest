@@ -87,7 +87,3 @@ export const taskStatus = async (req: Request, res: Response) => {
         return res.status(myError.status || 404).json({message: myError.message})
     }
 }
-
-const nose = (req: Request<unknown, unknown, CreatedTaskType>, res: Response) => {
-    console.log(req.body.title)
-}

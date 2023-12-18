@@ -7,7 +7,5 @@ export async function dbTest() {
     } catch (error) {
         if (error instanceof Error) return error.message
         return error
-        // if (error instanceof Error) return Promise.reject(error.message)
-        // return Promise.reject(error)
     }
 }

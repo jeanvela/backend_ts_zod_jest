@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const taskCreateSchema = z.object({
     body: z.object({
         title: z.string().min(4).max(18),
-        description: z.string().min(12).max(24),
+        description: z.string().min(12).max(78),
     })
 })
 
@@ -16,7 +16,7 @@ export const taskDeleteSchema = z.object({
 export const taskUpdateSchema = z.object({
     body: z.object({
         title: z.string().min(4).max(18),
-        description: z.string().min(12).max(24),
+        description: z.string().min(12).max(78),
         status: z.boolean().optional()
     }),
     params: z.object({

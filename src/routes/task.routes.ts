@@ -45,6 +45,11 @@ const router = Router()
  *       schema:
  *         type: string
  *       description: the task id
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 
 /**
@@ -60,6 +65,8 @@ const router = Router()
  *  get:
  *    summary: Return a Task list of user
  *    tags: [Tasks]
+ *    security:
+ *      - $ref: '#/components/securitySchemes/BearerAuth'
  *    responses:
  *      200:
  *        description: the list of tasks
@@ -69,6 +76,13 @@ const router = Router()
  *              type: array
  *              items:
  *                $ref: '#/components/schemas/Task'
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              example:
+ *                message: "No token, authorization denied"
  */
 
 router.get('/task', verifyToken, allTasks)
@@ -79,6 +93,8 @@ router.get('/task', verifyToken, allTasks)
  *  get:
  *    summary: return a one Task
  *    tags: [Tasks]
+ *    security:
+ *      - $ref: '#/components/securitySchemes/BearerAuth'
  *    parameters:
  *      - $ref: '#/components/parameters/taskId'
  *    responses:
@@ -103,6 +119,8 @@ router.get('/task/:id', verifyToken, oneTaskById)
  *  post:
  *    summary: create a new task
  *    tags: [Tasks]
+ *    security:
+ *      - $ref: '#/components/securitySchemes/BearerAuth'
  *    requestBody:
  *      required: true
  *      content:
@@ -128,6 +146,8 @@ router.post('/task', verifyToken, schemaValidation(taskCreateSchema), createdTas
  *  delete:
  *    summary: return status code 200 and delete task
  *    tags: [Tasks]
+ *    security:
+ *      - $ref: '#/components/securitySchemes/BearerAuth'
  *    parameters:
  *      - $ref: '#/components/parameters/taskId'
  *    responses:
@@ -152,6 +172,8 @@ router.delete('/task/:id', verifyToken, schemaValidation(taskDeleteSchema), dele
  *  put:
  *    summary: return status code 200 and update task
  *    tags: [Tasks]
+ *    security:
+ *      - $ref: '#/components/securitySchemes/BearerAuth'
  *    parameters:
  *      - $ref: '#/components/parameters/taskId'
  *    requestBody:
@@ -192,6 +214,8 @@ router.put('/task/:id', verifyToken, schemaValidation(taskUpdateSchema), updateT
  *  patch:
  *    summary: return status code 200 and update status task
  *    tags: [Tasks]
+ *    security:
+ *      - $ref: '#/components/securitySchemes/BearerAuth'
  *    parameters:
  *      - $ref: '#/components/parameters/taskId'
  *    requestBody:

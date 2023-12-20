@@ -24,7 +24,7 @@ export const signIn = async (req: Request, res: Response) => {
         })
     } catch (error) {
         const myError = error as MyError
-        return res.status(myError.status || 401).json({ error: myError.message });
+        return res.status(myError.status || 400).json({ error: myError.message });
     }
 }
 
@@ -41,7 +41,7 @@ export const signUp = async (req: Request, res: Response) => {
         return res.status(200).send('User created')
     } catch (error) {
         const myError = error as MyError
-        return res.status(myError.status || 401).json({message: myError.message})
+        return res.status(myError.status || 400).json({message: myError.message})
     }
 }
 
